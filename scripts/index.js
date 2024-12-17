@@ -11,8 +11,8 @@ function getCard(cardItem, delCard) {
   return cardElement;
 };
 
-function deleteCard(cardElement) {
-  const card = cardElement.target.parentElement; 
+function deleteCard(event) {
+  const card = event.target.closest('.card'); 
   card.remove();
 };
 
