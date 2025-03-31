@@ -46,14 +46,14 @@ profileEditBtn.addEventListener('click', () => {
   jobInput.value = profileDescription.textContent;
 });
 
-function handleFormSubmit(event) {
+function handleProfileFormSubmit(event) {
   event.preventDefault();
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
   closeModal(profileEditModal);
 };
 
-profileEditForm.addEventListener('submit', handleFormSubmit);
+profileEditForm.addEventListener('submit', handleProfileFormSubmit);
 
 function handleCardFormSubmit(event) {
   event.preventDefault();
