@@ -13,75 +13,70 @@ function handleResponse(res) {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-export function getUserProfileInfo() {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers
-  })
+function request(endpoint, options = {}) {
+  const {method = "GET", headers = config.headers, body} = options;
+  const requestOptions = {
+    method,
+    headers,
+  };
+  if (body) {
+    requestOptions.body = JSON.stringify(body);
+  };
+  return fetch(`${config.baseUrl}${endpoint}`, requestOptions)
     .then(handleResponse);
+};
+
+export function getUserProfileInfo() {
+  return request('/users/me');
 };
 
 export function getInitialCards() {
-  return fetch(`${config.baseUrl}/cards`, {
-    headers: config.headers
-  })
-    .then(handleResponse);
+  return request('/cards');
 };
 
 export function delCardFromList(cardId) {
-  return fetch(`${config.baseUrl}/cards/${cardId}`, {
-    method: "DELETE",
-    headers: config.headers
-  })
-    .then(handleResponse);
+  return request(`/cards/${cardId}`, {
+    method: "DELETE"
+  });
 };
 
 export function likeCard(cardId) {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-    method: "PUT",
-    headers: config.headers
-  })
-    .then(handleResponse);
+  return request(`/cards/likes/${cardId}`, {
+    method: "PUT"
+  });
 };
 
 export function unlikeCard(cardId) {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-    method: "DELETE",
-    headers: config.headers
-  })
-    .then(handleResponse);
+  return request(`/cards/likes/${cardId}`, {
+    method: "DELETE"
+  });
 };
 
-export function updateProfileInfo(nameValue, jobValue) {
-  return fetch(`${config.baseUrl}/users/me`, {
+export function updateProfileInfo(name, about) {
+  return request('/users/me', {
     method: "PATCH",
-    headers: config.headers,
-    body: JSON.stringify({
-      name: nameValue,
-      about: jobValue
-    })
-  })
-    .then(handleResponse);
+    body: {
+      name,
+      about
+    }
+  });
 };
 
-export function updateAvatarImage(avatarUrl) {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
+export function updateAvatarImage(avatar) {
+  return request('/users/me/avatar', {
     method: "PATCH",
-    headers: config.headers,
-    body: JSON.stringify({
-      avatar: avatarUrl
-    })
-  })
-    .then(handleResponse);
+    body: {
+      avatar
+    }
+  });
 };
 
 export function addNewCard(cardInfo) {
-  return fetch(`${config.baseUrl}/cards`, {
+  return request('/cards', {
     method: "POST",
-    headers: config.headers,
-    body: JSON.stringify({
+    body: {
       name: cardInfo.name,
       link: cardInfo.link
-    })
-  })
-    .then(handleResponse);
+    }
+  });
 };

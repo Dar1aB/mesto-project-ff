@@ -47,10 +47,14 @@ function hasInvalidInput(inputList) {
   })
 };
 
+function disableBtn(btnElement, data) {
+  btnElement.disabled = true;
+  btnElement.classList.add(data.inactiveButtonClass);
+};
+
 function togglePopupSaveBtnState(inputList, btnElement, data) {
   if (hasInvalidInput(inputList)) {
-    btnElement.disabled = true;
-    btnElement.classList.add(data.inactiveButtonClass);
+    disableBtn(btnElement, data);
   } else {
     btnElement.disabled = false;
     btnElement.classList.remove(data.inactiveButtonClass);
@@ -66,6 +70,5 @@ export function clearValidation(formElement, data) {
     hideInputError(formElement, inputElement, data);
   });
 
-  btnElement.disabled = true;
-  btnElement.classList.add(data.inactiveButtonClass);
+  disableBtn(btnElement, data);
 };
